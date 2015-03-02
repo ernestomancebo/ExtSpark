@@ -1,10 +1,25 @@
 package com.flectosystems.extspark.model;
 
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import java.io.Serializable;
 
 /**
  * Created by ernesto on 3/1/15.
  */
+@Entity
+@Table(
+        name = "item",
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = "ITEM")
+        }
+)
 public class Item implements Serializable {
 
     String status;
@@ -22,14 +37,9 @@ public class Item implements Serializable {
         this.weight = weight;
     }
 
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ITEM", unique = true, nullable = false)
     public String getItem() {
         return item;
     }
@@ -38,6 +48,16 @@ public class Item implements Serializable {
         this.item = item;
     }
 
+    @Column(name = "STATUS", nullable = false, length = 10)
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    @Column(name = "DESC", nullable = false, length = 30)
     public String getDesc() {
         return desc;
     }
@@ -46,6 +66,7 @@ public class Item implements Serializable {
         this.desc = desc;
     }
 
+    @Column(name = "WEIGHT", nullable = false, precision = 2)
     public Double getWeight() {
         return weight;
     }
