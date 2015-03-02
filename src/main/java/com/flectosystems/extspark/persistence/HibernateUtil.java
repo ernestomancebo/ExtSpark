@@ -2,7 +2,6 @@ package com.flectosystems.extspark.persistence;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AnnotationConfiguration;
-import org.hibernate.cfg.Configuration;
 
 /**
  * Created by ernesto on 3/1/15.

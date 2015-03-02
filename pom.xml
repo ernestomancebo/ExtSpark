@@ -20,6 +20,12 @@
                 <enabled>true</enabled>
             </snapshots>
         </repository>
+
+        <repository>
+            <id>JBoss repository</id>
+            <url>http://repository.jboss.com/maven2/</url>
+        </repository>
+
     </repositories>
     <pluginRepositories>
         <pluginRepository>
@@ -39,7 +45,7 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>3.8.1</version>
+            <version>4.12</version>
             <scope>test</scope>
         </dependency>
 
@@ -79,24 +85,29 @@
             <version>5.1.6</version>
         </dependency>
         <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate</artifactId>
-            <version>${hibernate.version}</version>
+            <groupId>hibernate</groupId>
+            <artifactId>hibernate3</artifactId>
+            <version>3.2.3.GA</version>
         </dependency>
+        <dependency>
+            <groupId>javax.persistence</groupId>
+            <artifactId>persistence-api</artifactId>
+            <version>1.0.2</version>
+        </dependency>
+
 
         <!-- Hibernate library dependecy start -->
         <dependency>
-            <groupId>org.hibernate</groupId>
+            <groupId>hibernate-annotations</groupId>
             <artifactId>hibernate-annotations</artifactId>
-            <version>${hibernate.annotations.version}</version>
+            <version>3.3.0.GA</version>
         </dependency>
 
         <dependency>
-            <groupId>org.hibernate</groupId>
+            <groupId>hibernate-commons-annotations</groupId>
             <artifactId>hibernate-commons-annotations</artifactId>
-            <version>3.3.0.ga</version>
+            <version>3.0.0.GA</version>
         </dependency>
-
 
         <dependency>
             <groupId>dom4j</groupId>
@@ -181,7 +192,7 @@
         <inject.version>1</inject.version>
         <app.name>MorphiaSparkAPI</app.name>
         <hibernate.version>3.3.2.GA</hibernate.version>
-        <hibernate.annotations.version>3.5.0-Final</hibernate.annotations.version>
+        <hibernate.dependency.version>3.3.0.GA</hibernate.dependency.version>
     </properties>
 
 </project>

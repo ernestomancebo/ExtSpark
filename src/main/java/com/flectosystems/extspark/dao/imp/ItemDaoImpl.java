@@ -3,6 +3,7 @@ package com.flectosystems.extspark.dao.imp;
 import com.flectosystems.extspark.dao.IItemDao;
 import com.flectosystems.extspark.model.Item;
 import org.hibernate.SessionFactory;
+import org.hibernate.classic.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -19,7 +20,12 @@ public class ItemDaoImpl implements IItemDao {
 
     @Override
     public void addItem(Item item) {
-        sessionFactory.getCurrentSession().save(item);
+        Session s = sessionFactory.openSession();
+        s.beginTransaction();
+
+        s.save(item);
+
+        s.getTransaction().commit();
     }
 
     @Override

@@ -3,6 +3,7 @@
 *.iml
 .class
 .jar
+target/
 
 ## JS ignore
 extjs/
