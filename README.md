@@ -1,2 +1,2 @@
 # ExtSpark
-Creating a demo usin ExtJS and Spark Java
+Creating a demo using ExtJS and Spark Java
