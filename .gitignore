@@ -1,0 +1,8 @@
+## Java ignores
+.idea/
+*.iml
+.class
+.jar
+
+## JS ignore
+extjs/
