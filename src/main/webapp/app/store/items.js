@@ -9,7 +9,7 @@ Ext.define('EXTSPARK.store.Items', {
 
     proxy: {
         type: 'ajax',
-        url: 'api/items/getItem',
+        url: 'api/items/getItems',
         extraParams: {
             company: 1
         },

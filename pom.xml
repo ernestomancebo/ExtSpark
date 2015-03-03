@@ -132,6 +132,12 @@
             <artifactId>cglib</artifactId>
             <version>2.2</version>
         </dependency>
+
+        <dependency>
+            <groupId>antlr</groupId>
+            <artifactId>antlr</artifactId>
+            <version>2.7.7</version>
+        </dependency>
         <!-- Hibernate library dependecy end -->
 
         <dependency>
@@ -190,7 +196,7 @@
         <java.version>1.8</java.version>
         <spring.version>3.1.2.RELEASE</spring.version>
         <inject.version>1</inject.version>
-        <app.name>MorphiaSparkAPI</app.name>
+        <app.name>ExtSPark</app.name>
         <hibernate.version>3.3.2.GA</hibernate.version>
         <hibernate.dependency.version>3.3.0.GA</hibernate.dependency.version>
     </properties>

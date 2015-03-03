@@ -1,7 +1,7 @@
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
     <bean id="HibernateUtil" class="com.flectosystems.extspark.persistence.HibernateUtil"/>
-    <bean id="ItemDaoImpl" class="com.flectosystems.extspark.dao.imp.ItemDaoImpl">
+    <bean id="ItemDaoImpl" class="com.flectosystems.extspark.dao.imp.ItemDaoImpl" >
         <property name="sessionFactory" value="#{HibernateUtil.sessionFactory}"/>
     </bean>
 </beans>

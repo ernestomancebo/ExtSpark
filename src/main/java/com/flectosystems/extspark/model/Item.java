@@ -23,7 +23,7 @@ public class Item implements Serializable {
     public Item() {
     }
 
-    public Item(String status, String item, String desc, Double weight) {
+    public Item(String item, String status, String desc, Double weight) {
         this.status = status;
         this.item = item;
         this.desc = desc;

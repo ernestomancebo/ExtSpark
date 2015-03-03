@@ -2,6 +2,7 @@ package com.flectosystems.extspark.dao.imp;
 
 import com.flectosystems.extspark.dao.IItemDao;
 import com.flectosystems.extspark.model.Item;
+import org.hibernate.ObjectNotFoundException;
 import org.hibernate.SessionFactory;
 import org.hibernate.classic.Session;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,13 @@ public class ItemDaoImpl implements IItemDao {
     @Override
     public Item getItem(String item) {
         // beginTransaction();
-        Item i = (Item) s.load(Item.class, item);
+        Item i = null;
+        try {
+            i = (Item) s.load(Item.class, item);
+        } catch (ObjectNotFoundException ex) {
+            ex.printStackTrace();
+            return i;
+        }
         // closeTransaction();
 
         return i;
@@ -39,7 +46,7 @@ public class ItemDaoImpl implements IItemDao {
     public ArrayList<Item> listItem() {
         // beginTransaction();
         ArrayList<Item> items = new ArrayList<Item>(
-                s.createQuery("from item").list()
+                s.createQuery("from com.flectosystems.extspark.model.Item").list()
         );
 
         // closeTransaction();
@@ -82,13 +89,17 @@ public class ItemDaoImpl implements IItemDao {
 
     @Override
     public void beginTransaction() {
-        s = sessionFactory.openSession();
-        s.beginTransaction();
+        if (null == s) {
+            s = sessionFactory.openSession();
+            s.beginTransaction();
+        }
     }
 
     @Override
     public void closeTransaction() {
-        s.getTransaction().commit();
-        s.close();
+        if (null != s) {
+            s.getTransaction().commit();
+            s.close();
+        }
     }
 }
