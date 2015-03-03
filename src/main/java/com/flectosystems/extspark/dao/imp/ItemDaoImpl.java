@@ -17,33 +17,41 @@ public class ItemDaoImpl implements IItemDao {
 
     @Autowired
     private SessionFactory sessionFactory;
+    private Session s;
 
     @Override
     public void addItem(Item item) {
-        Session s = sessionFactory.openSession();
-        s.beginTransaction();
-
+        // beginTransaction();
         s.save(item);
-
-        s.getTransaction().commit();
+        // closeTransaction();
     }
 
     @Override
     public Item getItem(String item) {
-        return (Item) sessionFactory.getCurrentSession().load(Item.class, item);
+        // beginTransaction();
+        Item i = (Item) s.load(Item.class, item);
+        // closeTransaction();
+
+        return i;
     }
 
     @Override
     public ArrayList<Item> listItem() {
-        return new ArrayList<Item>(
-                sessionFactory.getCurrentSession().createQuery("from Item").list()
+        // beginTransaction();
+        ArrayList<Item> items = new ArrayList<Item>(
+                s.createQuery("from item").list()
         );
+
+        // closeTransaction();
+        return items;
     }
 
     @Override
     public void updateItem(Item item) {
         if (null != item) {
-            sessionFactory.getCurrentSession().update(item);
+            // beginTransaction();
+            s.update(item);
+            // closeTransaction();
         }
     }
 
@@ -56,7 +64,9 @@ public class ItemDaoImpl implements IItemDao {
     @Override
     public void removeItem(Item item) {
         if (null != item) {
-            sessionFactory.getCurrentSession().delete(item);
+            // beginTransaction();
+            s.delete(item);
+            // closeTransaction();
         }
     }
 
@@ -68,5 +78,17 @@ public class ItemDaoImpl implements IItemDao {
 
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
+    }
+
+    @Override
+    public void beginTransaction() {
+        s = sessionFactory.openSession();
+        s.beginTransaction();
+    }
+
+    @Override
+    public void closeTransaction() {
+        s.getTransaction().commit();
+        s.close();
     }
 }

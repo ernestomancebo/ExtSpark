@@ -17,11 +17,13 @@ public class PersistenceTest {
     public static void setUp() throws Exception {
         ApplicationContext context = new ClassPathXmlApplicationContext("Spring-AutoScan.xml");
         itemDao = (ItemDaoImpl) context.getBean("ItemDaoImpl");
+        itemDao.beginTransaction();
     }
 
     @AfterClass
     public static void tearDown() throws Exception {
         itemDao.removeItem("ItemTest");
+        itemDao.closeTransaction();
     }
 
     @Test
@@ -35,7 +37,7 @@ public class PersistenceTest {
 
         itemDao.addItem(item);
 
-        Item savedItem = itemDao.getItem("Item1");
+        Item savedItem = itemDao.getItem("ItemTest");
         TestCase.assertTrue("Must match", item.getWeight() == savedItem.getWeight());
     }
 }

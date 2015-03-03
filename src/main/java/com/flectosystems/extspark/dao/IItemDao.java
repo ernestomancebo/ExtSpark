@@ -7,7 +7,7 @@ import java.util.ArrayList;
 /**
  * Created by Ernesto Mancebo T on 3/2/15.
  */
-public interface IItemDao {
+public interface IItemDao extends SimpleDao{
 
     public void addItem(Item item);
 

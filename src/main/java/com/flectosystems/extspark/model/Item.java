@@ -31,7 +31,6 @@ public class Item implements Serializable {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ITEM", unique = true, nullable = false)
     public String getItem() {
         return item;
@@ -50,7 +49,7 @@ public class Item implements Serializable {
         this.status = status;
     }
 
-    @Column(name = "DESC", nullable = false, length = 30)
+    @Column(name = "DESCRIPTION", nullable = false, length = 30)
     public String getDesc() {
         return desc;
     }
