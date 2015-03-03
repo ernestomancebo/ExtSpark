@@ -1,9 +1,6 @@
 package com.flectosystems.extspark.services.transformers;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import jdk.nashorn.internal.parser.JSONParser;
 import spark.ResponseTransformer;
 
 /**

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Ernesto Mancebo T on 3/2/15.
@@ -25,6 +26,15 @@ public class ItemDaoImpl implements IItemDao {
         // beginTransaction();
         s.save(item);
         // closeTransaction();
+    }
+
+    @Override
+    public void addManyItems(List<Item> items) {
+        if (null != items) {
+            for (int i = 0; i < items.size(); i++) {
+                addItem(items.get(i));
+            }
+        }
     }
 
     @Override
@@ -59,6 +69,15 @@ public class ItemDaoImpl implements IItemDao {
             // beginTransaction();
             s.update(item);
             // closeTransaction();
+        }
+    }
+
+    @Override
+    public void updateManyItems(List<Item> items) {
+        if (null != items) {
+            for (int i = 0; i < items.size(); i++) {
+                updateItem(items.get(i));
+            }
         }
     }
 
