@@ -1,9 +1,10 @@
-Ext.loader.setConfig({
-    enabled: true
-});
+//Ext.loader.setConfig({
+//    enabled: true
+//});
 
 Ext.application({
     name: 'EXTSPARK',
+    appFolder: 'app',
     controllers: ['Items'],
 
     launch: function () {

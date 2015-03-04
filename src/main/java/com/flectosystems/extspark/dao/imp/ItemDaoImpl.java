@@ -117,6 +117,7 @@ public class ItemDaoImpl implements IItemDao {
     @Override
     public void closeTransaction() {
         if (null != s) {
+            s.flush();
             s.getTransaction().commit();
             s.close();
         }

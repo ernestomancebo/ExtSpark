@@ -3,6 +3,7 @@ package com.flectosystems.extspark.services;
 import com.flectosystems.extspark.dao.IItemDao;
 import com.flectosystems.extspark.model.Constants;
 import com.flectosystems.extspark.model.Item;
+import com.flectosystems.extspark.model.ResponseStatus;
 import com.flectosystems.extspark.services.transformers.ItemArrayJsonTransformer;
 import com.flectosystems.extspark.services.transformers.JsonTransformer;
 import com.google.gson.Gson;
@@ -15,7 +16,6 @@ import org.springframework.stereotype.Repository;
 import spark.servlet.SparkApplication;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import static spark.Spark.get;
 import static spark.Spark.post;
@@ -36,7 +36,7 @@ public class ItemService implements SparkApplication {
 
         // Methods & params
         final String GET_ITEMS = "getItems";
-        final String ADD_ITEMS = "addItems/";
+        final String ADD_ITEMS = "addItems";
         final String ITEMS_PARAMS = "items";
 
         // Get all items
@@ -91,10 +91,11 @@ public class ItemService implements SparkApplication {
                 itemDao.closeTransaction();
             } catch (HibernateException ex) {
                 ex.printStackTrace();
-                return new HashMap<String, Boolean>().put("success", false);
+                res.status(500);
+                return new ResponseStatus(ex.toString(), false);
             }
 
-            return new HashMap<String, Boolean>().put("success", true);
+            return new ResponseStatus("", true);
         }, new JsonTransformer());
     }
 

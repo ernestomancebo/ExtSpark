@@ -2,20 +2,22 @@
  * Created by ernesto on 3/1/15.
  */
 Ext.define('EXTSPARK.store.Items', {
-    extend: 'Ext.data.store',
-    model: 'EXTSPARK.data.Item',
+    extend: 'Ext.data.Store',
+    model: 'EXTSPARK.model.Item',
     autoload: true,
     pageSize: 10,
 
     proxy: {
         type: 'ajax',
-        url: 'api/items/getItems',
-        extraParams: {
-            company: 1
+        api: {
+            read: 'ExtSPark/api/items/getItems'
         },
+//        extraParams: {
+//            company: 1
+//        },
         reader: {
             type: 'json',
-            totalProperty: 'totalCount',
+//            totalProperty: 'totalCount',
             root: 'items',
             successProperty: 'success'
         }

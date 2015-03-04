@@ -1,5 +1,7 @@
 package com.flectosystems.extspark.services.transformers;
 
+import com.flectosystems.extspark.model.Constants;
+import com.flectosystems.extspark.model.ResponseStatus;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -20,10 +22,13 @@ public class ItemArrayJsonTransformer implements ResponseTransformer {
         // Handle the Array
         String itemArray = gson.toJson(model);
         JsonElement itemArrayElement = new JsonParser().parse(itemArray);
-        jsonObject.add("item_array", itemArrayElement);
+        jsonObject.add(Constants.ITEM_ARRAY, itemArrayElement);
 
         // Put the success thing.
-        jsonObject.addProperty("success", true);
+        JsonElement successResponse = new JsonParser().parse(
+                gson.toJson(new ResponseStatus("", true))
+        );
+        jsonObject.add(Constants.RESPONSE_STATUS, successResponse);
 
         return jsonObject.toString();
     }

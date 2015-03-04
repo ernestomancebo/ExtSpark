@@ -2,7 +2,7 @@
  * Created by ernesto on 3/1/15.
  */
 Ext.define('EXTSPARK.view.item.List', {
-    extend: 'Ext.grid.panel',
+    extend: 'Ext.grid.Panel',
     alias: 'widget.itemlist',
     title: 'List of items',
     store: 'Items',
@@ -13,7 +13,7 @@ Ext.define('EXTSPARK.view.item.List', {
         {
             xtype: 'pagintoolbar',
             store: 'Items',
-            dock: 'booton',
+            dock: 'bottom',
             displayInfo: true,
 
             items: [
