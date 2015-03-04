@@ -44,7 +44,7 @@ public class ItemDaoImpl implements IItemDao {
         try {
             i = (Item) s.load(Item.class, item);
         } catch (ObjectNotFoundException ex) {
-            ex.printStackTrace();
+            System.out.println("Item not found. " + ex.toString());
             return i;
         }
         // closeTransaction();
@@ -108,7 +108,7 @@ public class ItemDaoImpl implements IItemDao {
 
     @Override
     public void beginTransaction() {
-        if (null == s) {
+        if (null == s || !s.isOpen()) {
             s = sessionFactory.openSession();
             s.beginTransaction();
         }

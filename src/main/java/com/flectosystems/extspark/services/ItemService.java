@@ -37,18 +37,24 @@ public class ItemService implements SparkApplication {
         // Methods & params
         final String GET_ITEMS = "getItems";
         final String ADD_ITEMS = "addItems/";
-        final String ITEMS_PARAMS = ":items";
+        final String ITEMS_PARAMS = "items";
 
         // Get all items
         get(Constants.ITEMS_URL.concat(GET_ITEMS), (req, res) -> {
             itemDao.beginTransaction();
-            return itemDao.listItem();
+
+            ArrayList<Item> itemsArray = itemDao.listItem();
+
+//            itemDao.commit();
+            itemDao.closeTransaction();
+            return itemsArray;
+
         }, new ItemArrayJsonTransformer());
 
         // Add items
         post(Constants.ITEMS_URL.concat(ADD_ITEMS), (req, res) -> {
             boolean add = false;
-            String items = req.params(ITEMS_PARAMS);
+            String items = req.queryParams(ITEMS_PARAMS);
 
             if (null == items) {
                 items = req.body();
@@ -73,17 +79,22 @@ public class ItemService implements SparkApplication {
                 itemsArray.add(singleItem);
             }
             try {
+                itemsArray.trimToSize();
+                itemDao.beginTransaction();
+
                 if (add) {
                     itemDao.addManyItems(itemsArray);
                 } else {
                     itemDao.updateManyItems(itemsArray);
                 }
+
+                itemDao.closeTransaction();
             } catch (HibernateException ex) {
                 ex.printStackTrace();
-                return new HashMap<>().put("success", false);
+                return new HashMap<String, Boolean>().put("success", false);
             }
 
-            return new HashMap<>().put("success", true);
+            return new HashMap<String, Boolean>().put("success", true);
         }, new JsonTransformer());
     }
 

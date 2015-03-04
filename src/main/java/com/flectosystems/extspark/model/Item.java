@@ -66,4 +66,14 @@ public class Item implements Serializable {
     public void setWeight(Double weight) {
         this.weight = weight;
     }
+
+    @Override
+    public String toString() {
+        return "Item{" +
+                "status='" + status + '\'' +
+                ", item='" + item + '\'' +
+                ", desc='" + desc + '\'' +
+                ", weight=" + weight +
+                '}';
+    }
 }

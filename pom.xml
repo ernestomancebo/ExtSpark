@@ -189,6 +189,31 @@
                     <path>/${project.build.finalName}</path>
                 </configuration>
             </plugin>
+
+            <!-- Plugin to deploy the war on Glassfish -->
+            <plugin>
+                <groupId>org.glassfish.maven.plugin</groupId>
+                <artifactId>maven-glassfish-plugin</artifactId>
+                <configuration>
+                    <terse>false</terse>
+                    <echo>true</echo>
+                    <debug>true</debug>
+                    <glassfishDirectory>${glassfish.glassfishDirectory}</glassfishDirectory>
+                    <user>${glassfish.user}</user>
+                    <adminPassword>${glassfish.adminPassword}</adminPassword>
+                    <domain>
+                        <name>${glassfish.domain.name}</name>
+                        <host>${glassfish.domain.host}</host>
+                        <adminPort>${glassfish.domain.adminPort}</adminPort>
+                    </domain>
+                    <components>
+                        <component>
+                            <name>${project.artifactId}</name>
+                            <artifact>${project.build.directory}/${project.build.finalName}.war</artifact>
+                        </component>
+                    </components>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
     <!-- Properties -->
@@ -199,6 +224,14 @@
         <app.name>ExtSPark</app.name>
         <hibernate.version>3.3.2.GA</hibernate.version>
         <hibernate.dependency.version>3.3.0.GA</hibernate.dependency.version>
+
+        <!-- Glassfish properties -->
+        <glassfish.glassfishDirectory>D:\glassfish-4.1\glassfish4\glassfish</glassfish.glassfishDirectory>
+        <glassfish.user>admin</glassfish.user>
+        <glassfish.adminPassword>admin</glassfish.adminPassword>
+        <glassfish.domain.name>domain1</glassfish.domain.name>
+        <glassfish.domain.host>localhost</glassfish.domain.host>
+        <glassfish.domain.adminPort>4848</glassfish.domain.adminPort>
     </properties>
 
 </project>
