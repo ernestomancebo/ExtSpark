@@ -4,22 +4,18 @@
 Ext.define('EXTSPARK.store.Items', {
     extend: 'Ext.data.Store',
     model: 'EXTSPARK.model.Item',
-    autoload: true,
-    pageSize: 10,
+    autoLoad: true,
 
     proxy: {
         type: 'ajax',
         api: {
-            read: 'ExtSPark/api/items/getItems'
+            read: '/ExtSPark/api/items/getItems',
+            update: 'data/updateUsers.json'
         },
-//        extraParams: {
-//            company: 1
-//        },
         reader: {
             type: 'json',
-//            totalProperty: 'totalCount',
-            root: 'items',
-            successProperty: 'success'
+            rootProperty: 'items',
+            successProperty: 'status.success'
         }
     },
 
@@ -31,4 +27,5 @@ Ext.define('EXTSPARK.store.Items', {
             });
         }
     }
-})
+});
+

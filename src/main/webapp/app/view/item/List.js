@@ -7,11 +7,11 @@ Ext.define('EXTSPARK.view.item.List', {
     title: 'List of items',
     store: 'Items',
     loadMask: true,
-    autoheight: true,
+    autoHeight: true,
 
-    dockeditems: [
+    dockedItems: [
         {
-            xtype: 'pagintoolbar',
+            xtype: 'pagingtoolbar',
             store: 'Items',
             dock: 'bottom',
             displayInfo: true,

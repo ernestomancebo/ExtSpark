@@ -10,7 +10,7 @@ Ext.define('EXTSPARK.view.item.Edit', {
     autoShow: true,
 
     initComponent: function () {
-        this.item = this.buildItems();
+        this.items = this.buildItems();
         this.buttons = this.buildButtons();
         this.callParent(arguments);
     },
