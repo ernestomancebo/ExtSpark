@@ -22,7 +22,6 @@ Ext.define('EXTSPARK.view.item.Edit', {
                 items: [
                     {
                         xtype: 'textfield',
-                        itemId: 'itemNumber',
                         name: 'item',
                         allowBlank: false,
                         msgTarget: 'side',
@@ -38,6 +37,16 @@ Ext.define('EXTSPARK.view.item.Edit', {
                         fieldLabel: 'Description',
                         size: 31,
                         maxLength: 30
+                    },
+                    {
+                        xtype: 'textfield',
+                        name: 'status',
+                        allowBlank: false,
+                        msgTarget: 'side',
+                        fieldLabel: 'Status',
+                        size: 11,
+                        maxLength: 10
+
                     },
                     {
                         xtype: 'numberfield',

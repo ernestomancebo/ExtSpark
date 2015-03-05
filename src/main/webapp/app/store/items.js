@@ -10,7 +10,7 @@ Ext.define('EXTSPARK.store.Items', {
         type: 'ajax',
         api: {
             read: '/ExtSPark/api/items/getItems',
-            update: 'data/updateUsers.json'
+            update: '/ExtSPark/api/items/addItems'
         },
         reader: {
             type: 'json',

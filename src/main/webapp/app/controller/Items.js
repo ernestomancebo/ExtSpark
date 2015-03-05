@@ -15,7 +15,7 @@ Ext.define('EXTSPARK.controller.Items', {
                     render: this.onPanelRendered
                 },
                 'itemlist': {
-                    itemdbclick: this.editItem
+                    itemdblclick: this.editItem
                 },
                 'itemlist button[action=add]': {
                     click: this.addItem
@@ -37,9 +37,9 @@ Ext.define('EXTSPARK.controller.Items', {
     },
 
     editItem: function (grid, record) {
-        var view = ext.widget('itemedit');
+        var view = Ext.widget('itemedit');
         view.down('form').loadRecord(record);
-        view.down('form').getcomponent('itemNumber').setReadOnly(true);
+        // view.down('form').getComponent('itemNumber').setReadOnly(true);
     },
 
     updateItem: function (button) {
@@ -50,10 +50,9 @@ Ext.define('EXTSPARK.controller.Items', {
             if (form.getForm().isValid()) {
                 Ext.Ajax.request(
                     {
-                        url: 'api/items/updateItem',
+                        url: '/ExtSPark/api/items/addItems',
                         params: {
-                            company: 1,
-                            addData: Ext.encode(form.getValues())
+                            items: Ext.encode(form.getValues())
                         },
                         scope: this,
                         success: this.onSaveSuccess,
@@ -66,6 +65,9 @@ Ext.define('EXTSPARK.controller.Items', {
         } else {
             record = form.getRecord();
             values = form.getValues();
+
+            console.log(values);
+
             record.set(values);
 
             win.close();
@@ -75,6 +77,7 @@ Ext.define('EXTSPARK.controller.Items', {
 
     onSaveFailure: function (err) {
         Ext.MessageBox.alert('Status', 'Error occurred during Item Add');
+        console.log(err);
     },
 
     onSaveSuccess: function (response) {

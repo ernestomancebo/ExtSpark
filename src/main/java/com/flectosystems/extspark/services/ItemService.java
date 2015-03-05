@@ -88,11 +88,12 @@ public class ItemService implements SparkApplication {
                     itemDao.updateManyItems(itemsArray);
                 }
 
-                itemDao.closeTransaction();
             } catch (HibernateException ex) {
                 ex.printStackTrace();
                 res.status(500);
                 return new ResponseStatus(ex.toString(), false);
+            } finally {
+                itemDao.closeTransaction();
             }
 
             return new ResponseStatus("", true);
