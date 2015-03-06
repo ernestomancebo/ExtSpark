@@ -38,7 +38,8 @@ Ext.define('EXTSPARK.view.item.List', {
         this.columns = [
             {header: 'Item Number', dataIndex: 'item', flex: 1},
             {header: 'Description', dataIndex: 'desc', flex: 1},
-            {header: 'Weight', dataIndex: 'weight', flex: 1}
+            {header: 'Weight', dataIndex: 'weight', flex: 1},
+            {xtype: 'checkcolumn', header: '', dataIndex: 'checked'}
         ];
 
         this.callParent(arguments);

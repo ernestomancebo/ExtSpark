@@ -17,8 +17,7 @@ import spark.servlet.SparkApplication;
 
 import java.util.ArrayList;
 
-import static spark.Spark.get;
-import static spark.Spark.post;
+import static spark.Spark.*;
 
 @Repository
 public class ItemService implements SparkApplication {
@@ -37,6 +36,7 @@ public class ItemService implements SparkApplication {
         // Methods & params
         final String GET_ITEMS = "getItems";
         final String ADD_ITEMS = "addItems";
+        final String DELETE_ITEMS = "deleteItems";
         final String ITEMS_PARAMS = "items";
         final String ADD_PARAM = "add";
 
@@ -46,37 +46,21 @@ public class ItemService implements SparkApplication {
 
             ArrayList<Item> itemsArray = itemDao.listItem();
 
-//            itemDao.commit();
             itemDao.closeTransaction();
             return itemsArray;
 
         }, new ItemArrayJsonTransformer());
 
-        // Add items
+        // Add or update items
         post(Constants.ITEMS_URL.concat(ADD_ITEMS), (req, res) -> {
             String items = req.queryParams(ITEMS_PARAMS);
             String isAdd = req.queryParams(ADD_PARAM);
 
             boolean add = (isAdd != null ? Boolean.valueOf(isAdd) : false);
 
-            ArrayList<Item> itemsArray = new ArrayList<>();
+            ArrayList<Item> itemsArray = parseItemsFromRequest(items);
 
-            // parse JSON array, otherwise, a single JSON
-            if (items.startsWith("[")) {
-                JsonArray jsonElements = new JsonParser().parse(items).getAsJsonArray();
-
-                for (int i = 0; i < jsonElements.size(); i++) {
-                    JsonObject jsonObject = jsonElements.get(i).getAsJsonObject();
-                    Item singleItem = new Gson().fromJson(jsonObject, Item.class);
-                    itemsArray.add(singleItem);
-                }
-            } else {
-                JsonObject jsonObject = new JsonParser().parse(items).getAsJsonObject();
-                Item singleItem = new Gson().fromJson(jsonObject, Item.class);
-                itemsArray.add(singleItem);
-            }
             try {
-                itemsArray.trimToSize();
                 itemDao.beginTransaction();
 
                 if (add) {
@@ -87,7 +71,6 @@ public class ItemService implements SparkApplication {
 
             } catch (HibernateException ex) {
                 ex.printStackTrace();
-//                res.status(500);
                 return new ResponseStatus(ex.toString(), false);
             } finally {
                 itemDao.closeTransaction();
@@ -95,6 +78,52 @@ public class ItemService implements SparkApplication {
 
             return new ResponseStatus("", true);
         }, new JsonTransformer());
+
+        delete(Constants.ITEMS_URL.concat("test"), (req, res) -> {
+            return "OK";
+        }, new JsonTransformer());
+
+        // Delete items
+        post(Constants.ITEMS_URL.concat(DELETE_ITEMS), (req, res) -> {
+            String items = req.queryParams(ITEMS_PARAMS);
+            ArrayList<Item> itemsArray = parseItemsFromRequest(items);
+
+            try {
+                itemDao.beginTransaction();
+                for (Item i : itemsArray)
+                    itemDao.removeItem(i);
+            } catch (HibernateException ex) {
+                ex.printStackTrace();
+                return new ResponseStatus(ex.toString(), false);
+            } finally {
+                itemDao.closeTransaction();
+            }
+
+            return new ResponseStatus("", true);
+        }, new JsonTransformer());
+    }
+
+    public ArrayList<Item> parseItemsFromRequest(String items) {
+        ArrayList<Item> itemsArray = new ArrayList<>();
+
+        // parse JSON array, otherwise, a single JSON
+        if (items.startsWith("[")) {
+            JsonArray jsonElements = new JsonParser().parse(items).getAsJsonArray();
+
+            for (int i = 0; i < jsonElements.size(); i++) {
+                JsonObject jsonObject = jsonElements.get(i).getAsJsonObject();
+                Item singleItem = new Gson().fromJson(jsonObject, Item.class);
+                itemsArray.add(singleItem);
+            }
+        } else {
+            JsonObject jsonObject = new JsonParser().parse(items).getAsJsonObject();
+            Item singleItem = new Gson().fromJson(jsonObject, Item.class);
+            itemsArray.add(singleItem);
+        }
+
+        itemsArray.trimToSize();
+
+        return itemsArray;
     }
 
     public void setItemDao(IItemDao itemDao) {

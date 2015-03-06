@@ -89,11 +89,19 @@ Ext.define('EXTSPARK.controller.Items', {
         var list = Ext.widget('itemlist');
         var store = list.getStore();
 
+        var items = [];
+
         store.each(function (record, idx) {
-                console.log(record.get('weight'));
+                if (record.get('checked')) {
+                    items[items.length] = record.data;
+                    // checked is not part of the item object, neither the ExtJS id
+                    delete items[items.length - 1].checked;
+                    delete items[items.length - 1].id;
+                }
             }
-        )
-        ;
+        );
+
+        deleteItems(items);
     },
 
     onSaveFailure: function (err) {
@@ -108,3 +116,20 @@ Ext.define('EXTSPARK.controller.Items', {
 
 })
 ;
+
+function deleteItems(items) {
+    Ext.Ajax.request(
+        {
+            url: '/ExtSPark/api/items/deleteItems',
+            params: {
+                items: Ext.encode(items)
+            },
+            scope: this,
+            method: 'POST'
+            /*
+             ,
+             success: this.onSaveSuccess,
+             failure: this.onSaveFailure
+             */
+        });
+}
