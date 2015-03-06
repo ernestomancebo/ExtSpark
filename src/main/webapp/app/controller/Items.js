@@ -20,6 +20,9 @@ Ext.define('EXTSPARK.controller.Items', {
                 'itemlist button[action=add]': {
                     click: this.addItem
                 },
+                'itemlist button[action=delete]': {
+                    click: this.deleteItem
+                },
                 'itemedit button[action=save]': {
                     click: this.updateItem
                 }
@@ -44,7 +47,7 @@ Ext.define('EXTSPARK.controller.Items', {
 
     updateItem: function (button) {
         var win = button.up('window');
-        form = win.down('form');
+        var form = win.down('form');
 
         if (win.addMode) {
             if (form.getForm().isValid()) {
@@ -52,7 +55,8 @@ Ext.define('EXTSPARK.controller.Items', {
                     {
                         url: '/ExtSPark/api/items/addItems',
                         params: {
-                            items: Ext.encode(form.getValues())
+                            items: Ext.encode(form.getValues()),
+                            add: true
                         },
                         scope: this,
                         success: this.onSaveSuccess,
@@ -75,14 +79,32 @@ Ext.define('EXTSPARK.controller.Items', {
         }
     },
 
+    deleteItem: function () {
+        /*
+         Capture the grids that are checked.
+         Get the Items-item field value.
+         Create an array of the item field value.
+         Send to server.
+         */
+        var list = Ext.widget('itemlist');
+        var store = list.getStore();
+
+        store.each(function (record, idx) {
+                console.log(record.get('weight'));
+            }
+        )
+        ;
+    },
+
     onSaveFailure: function (err) {
         Ext.MessageBox.alert('Status', 'Error occurred during Item Add');
         console.log(err);
     },
 
     onSaveSuccess: function (response) {
-        Ex.MessageBox.alert('Status', 'Item successfully Added');
-        this.getItemStore().load();
+        Ext.MessageBox.alert('Status', 'Item successfully Added');
+        this.getItemsStore().load();
     }
 
-});
+})
+;

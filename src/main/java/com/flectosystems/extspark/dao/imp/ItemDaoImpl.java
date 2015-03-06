@@ -67,6 +67,7 @@ public class ItemDaoImpl implements IItemDao {
     public void updateItem(Item item) {
         if (null != item) {
             // beginTransaction();
+//            s.refresh(item);
             s.update(item);
             // closeTransaction();
         }
@@ -116,7 +117,7 @@ public class ItemDaoImpl implements IItemDao {
 
     @Override
     public void closeTransaction() {
-        if (null != s) {
+        if (null != s && s.isOpen()) {
             s.flush();
             s.getTransaction().commit();
             s.close();

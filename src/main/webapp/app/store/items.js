@@ -16,6 +16,13 @@ Ext.define('EXTSPARK.store.Items', {
             type: 'json',
             rootProperty: 'items',
             successProperty: 'status.success'
+        },
+        writer: {
+            type: 'json',
+            writeAllFields: true,
+            writeRecordId: false,
+            rootProperty: 'items',
+            encode: true
         }
     },
 

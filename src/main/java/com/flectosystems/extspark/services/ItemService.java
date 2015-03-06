@@ -38,6 +38,7 @@ public class ItemService implements SparkApplication {
         final String GET_ITEMS = "getItems";
         final String ADD_ITEMS = "addItems";
         final String ITEMS_PARAMS = "items";
+        final String ADD_PARAM = "add";
 
         // Get all items
         get(Constants.ITEMS_URL.concat(GET_ITEMS), (req, res) -> {
@@ -53,14 +54,10 @@ public class ItemService implements SparkApplication {
 
         // Add items
         post(Constants.ITEMS_URL.concat(ADD_ITEMS), (req, res) -> {
-            boolean add = false;
             String items = req.queryParams(ITEMS_PARAMS);
+            String isAdd = req.queryParams(ADD_PARAM);
 
-            if (null == items) {
-                items = req.body();
-            } else {
-                add = true;
-            }
+            boolean add = (isAdd != null ? Boolean.valueOf(isAdd) : false);
 
             ArrayList<Item> itemsArray = new ArrayList<>();
 
@@ -90,7 +87,7 @@ public class ItemService implements SparkApplication {
 
             } catch (HibernateException ex) {
                 ex.printStackTrace();
-                res.status(500);
+//                res.status(500);
                 return new ResponseStatus(ex.toString(), false);
             } finally {
                 itemDao.closeTransaction();

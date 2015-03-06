@@ -24,6 +24,11 @@ Ext.define('EXTSPARK.view.item.List', {
                     xtype: 'button',
                     text: 'Add Item',
                     action: 'add'
+                },
+                {
+                    xtype: 'button',
+                    text: 'Delete Item',
+                    action: 'delete'
                 }
             ]
         }
