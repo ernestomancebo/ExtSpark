@@ -9,6 +9,15 @@
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
 
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>classpath:camel-config.xml</param-value>
+    </context-param>
+
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+
     <listener>
         <listener-class>com.flectosystems.extspark.config.DependencyInjectionInitializer</listener-class>
     </listener>
@@ -32,11 +41,17 @@
         <url-pattern>/api/items/*</url-pattern>
     </filter-mapping>
 
-    <resource-ref>
-        <description>MySQl Datasource</description>
-        <res-ref-name>jdbc/test</res-ref-name>
-        <res-type>javax.sql.DataSource</res-type>
-        <res-auth>Container</res-auth>
-        <res-sharing-scope>Shareable</res-sharing-scope>
-    </resource-ref>
+    <servlet>
+        <servlet-name>RestletServlet</servlet-name>
+        <servlet-class>org.restlet.ext.spring.SpringServerServlet</servlet-class>
+        <init-param>
+            <param-name>org.restlet.component</param-name>
+            <param-value>RestletComponent</param-value>
+        </init-param>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>RestletServlet</servlet-name>
+        <url-pattern>/api/restlet/*</url-pattern>
+    </servlet-mapping>
 </web-app>

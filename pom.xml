@@ -26,6 +26,12 @@
             <url>http://repository.jboss.com/maven2/</url>
         </repository>
 
+        <repository>
+            <id>maven-restlet</id>
+            <name>Public online Restlet repository</name>
+            <url>http://maven.restlet.org</url>
+        </repository>
+
     </repositories>
     <pluginRepositories>
         <pluginRepository>
@@ -76,6 +82,18 @@
             <groupId>javax.inject</groupId>
             <artifactId>javax.inject</artifactId>
             <version>${inject.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-expression</artifactId>
+            <version>${spring.version}</version>
         </dependency>
 
         <!--For database connection and persistence-->
@@ -146,6 +164,44 @@
             <version>1.1</version>
         </dependency>
 
+        <!-- Camel -->
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-core</artifactId>
+            <version>${camel.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-spring</artifactId>
+            <version>${camel.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-jdbc</artifactId>
+            <version>${camel.version}</version>
+        </dependency>
+
+        <!-- HSQL -->
+        <dependency>
+            <groupId>org.hsqldb</groupId>
+            <artifactId>hsqldb</artifactId>
+            <version>${hsqldb.version}</version>
+        </dependency>
+
+        <!-- Restlet -->
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-restlet</artifactId>
+            <version>${camel.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.restlet.jee</groupId>
+            <artifactId>org.restlet.ext.spring</artifactId>
+            <version>${restlet.version}</version>
+        </dependency>
     </dependencies>
 
     <!-- Build Config -->
@@ -214,6 +270,17 @@
                     </components>
                 </configuration>
             </plugin>
+
+            <plugin>
+                <groupId>org.mortbay.jetty</groupId>
+                <artifactId>maven-jetty-plugin</artifactId>
+                <version>${maven-jetty-plugin-version}</version>
+                <configuration>
+                    <webApp>${basedir}/target/${project.artifactId}.war</webApp>
+                    <contextPath>/</contextPath>
+                </configuration>
+            </plugin>
+
         </plugins>
     </build>
     <!-- Properties -->
@@ -232,6 +299,13 @@
         <glassfish.domain.name>domain1</glassfish.domain.name>
         <glassfish.domain.host>localhost</glassfish.domain.host>
         <glassfish.domain.adminPort>4848</glassfish.domain.adminPort>
+
+        <!-- Camel properties -->
+        <camel.version>2.11.1</camel.version>
+        <restlet.version>2.0.15</restlet.version>
+        <hsqldb.version>2.0.0</hsqldb.version>
+
+        <maven-jetty-plugin-version>6.1.25</maven-jetty-plugin-version>
     </properties>
 
 </project>
