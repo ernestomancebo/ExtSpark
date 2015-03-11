@@ -23,6 +23,9 @@ public class UserRouteBuilder extends RouteBuilder {
                 )
                 .to("jdbc:dataSource");
 
+        /*
+        Operations over an user
+         */
         from("restlet:/user/{userId}?restletMethods=GET,PUT,DELETE")
                 .choice()
                 .when(
@@ -33,12 +36,21 @@ public class UserRouteBuilder extends RouteBuilder {
                 )
                 .when(
                         simple("${header.CamelHttpMethod} == 'PUT'")
-
                 )
-        .setBody(
-               simple("UPDATE user SET firstName = '${header.firstName}', lastName = '${header.lastName}' WHERE id = ${header.userId}")
+                .setBody(
+                        simple("UPDATE user SET firstName = '${header.firstName}', lastName = '${header.lastName}' WHERE id = ${header.userId}")
+                )
+                .when(
+                        simple("${header.CamelHttpMethod} == 'DELETE'")
+                )
+                .setBody(
+                        simple("DELETE FROM user WHERE id = ${header.userId}")
+                )
+                .otherwise()
+                .stop()
+                .end()
+                .to("jdbc:dataSource");
 
-        );
         /*
         List all user
          */
